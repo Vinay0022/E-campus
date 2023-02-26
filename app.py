@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
@@ -22,7 +23,10 @@ ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
+#postgres://e_campus_nysh_user:DfhzcNtiUoNGaaDWJomXeTYFfoAymq4X@dpg-cftne69a6gdotcfm7p0g-a.oregon-postgres.render.com/e_campus_nysh
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -108,9 +112,9 @@ class Comment(db.Model):
 #     order_id = db.Column(db.Integer, nullable=False)
 
 
-#db.create_all()
-with app.app_context():
-            db.create_all()
+db.create_all()
+#with app.app_context():
+#            db.create_all()
 
 
 @app.route('/')
