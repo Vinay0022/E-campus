@@ -1,15 +1,17 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SelectField, IntegerField
 from wtforms.validators import DataRequired, URL
-from flask_ckeditor import CKEditorField
+#from flask_ckeditor import CKEditorField
 
 
 ##WTForm
 class CreateEventForm(FlaskForm):
     title = StringField("Project Title", validators=[DataRequired()])
-    subtitle = StringField("Subtitle", validators=[DataRequired()])
+    subtitle = StringField("Academic Year", validators=[DataRequired()])
+    group = StringField("Group Members", validators=[DataRequired()])
+    guide = StringField("Project Guide", validators=[DataRequired()])
     img_url = StringField("Project Image URL", validators=[DataRequired(), URL()])
-    body = CKEditorField("Project Content", validators=[DataRequired()])
+    body = StringField("Project Content", validators=[DataRequired()])
     submit = SubmitField("Create")
 
 class RegisterForm(FlaskForm):
@@ -24,7 +26,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 class CommentForm(FlaskForm):
-    comment = CKEditorField("Your views about this project", validators=[DataRequired()])
+    comment = StringField("Your views about this project", validators=[DataRequired()])
     submit = SubmitField("Comment")
 
 class GrievanceForm(FlaskForm):
@@ -33,7 +35,7 @@ class GrievanceForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     phone_no = StringField("Phone number")
-    grievance = CKEditorField("Tell us about your issue", validators=[DataRequired()])
+    grievance = StringField("Tell us about your issue", validators=[DataRequired()])
     submit = SubmitField("Send")
 
 # class LostFoundForm(FlaskForm):

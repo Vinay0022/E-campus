@@ -23,9 +23,9 @@ ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
 #postgres://e_campus_nysh_user:DfhzcNtiUoNGaaDWJomXeTYFfoAymq4X@dpg-cftne69a6gdotcfm7p0g-a.oregon-postgres.render.com/e_campus_nysh
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -65,6 +65,8 @@ class BlogPost(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     title = db.Column(db.String(250), unique=True, nullable=False)
     subtitle = db.Column(db.String(250), nullable=False)
+    group = db.Column(db.String(250), unique=True, nullable=False)
+    guide = db.Column(db.String(250), nullable=False)
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
@@ -234,6 +236,8 @@ def add_new_post():
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
+            group=form.group.data,
+            guide=form.guide.data,
             body=form.body.data,
             img_url=form.img_url.data,
             author=current_user,
@@ -251,6 +255,8 @@ def edit_post(post_id):
     edit_form = CreateEventForm(
         title=post.title,
         subtitle=post.subtitle,
+        group=post.group,
+        guide=post.guide,
         img_url=post.img_url,
         author=current_user,
         body=post.body
@@ -258,6 +264,8 @@ def edit_post(post_id):
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
         post.subtitle = edit_form.subtitle.data
+        post.group = edit_form.group.data
+        post.guide = edit_form.guide.data
         post.img_url = edit_form.img_url.data
         post.body = edit_form.body.data
         db.session.commit()
