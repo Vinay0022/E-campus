@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SelectField, IntegerField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, URL
+from wtforms.widgets import TextArea
 #from flask_ckeditor import CKEditorField
 
 
@@ -8,7 +9,8 @@ from wtforms.validators import DataRequired, URL
 class CreateEventForm(FlaskForm):
     title = StringField("Project Title", validators=[DataRequired()])
     subtitle = StringField("Academic Year", validators=[DataRequired()])
-    group = StringField("Group Members", validators=[DataRequired()])
+    group = StringField("Group Members", validators=[DataRequired()],widget=TextArea())
+    #group = TextAreaField("Group Members", validators=[DataRequired()])
     guide = StringField("Project Guide", validators=[DataRequired()])
     img_url = StringField("Project Image URL", validators=[DataRequired(), URL()])
     body = StringField("Project Content", validators=[DataRequired()])
@@ -37,19 +39,3 @@ class GrievanceForm(FlaskForm):
     phone_no = StringField("Phone number")
     grievance = StringField("Tell us about your issue", validators=[DataRequired()])
     submit = SubmitField("Send")
-
-# class LostFoundForm(FlaskForm):
-#     choices = ["Lost", "Found"]
-#     user_choice = SelectField("Choose one", choices=choices, validators=[DataRequired()])
-#     title = StringField("Title", validators=[DataRequired()])
-#     item_desc = CKEditorField(f"Tell something about the item , enter your desired way of contact", validators=[DataRequired()])
-#     submit = SubmitField("Post")
-
-
-
-
-
-# class CanteenForm(FlaskForm):
-#     name = StringField("Your name", validators=[DataRequired()])
-#     order = CKEditorField("Enter your order in the form 'quantity' x 'menu item name' ", validators=[DataRequired()])
-#     submit = SubmitField("Order")
