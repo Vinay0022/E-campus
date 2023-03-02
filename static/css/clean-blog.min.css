@@ -215,7 +215,8 @@ img::-moz-selection {
 
     #mainNav .navbar-brand {
         padding: 10px 20px;
-        color: #fff
+        color: #fff;
+         background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
     }
 
     #mainNav .navbar-brand:focus,
@@ -225,6 +226,7 @@ img::-moz-selection {
 
     #mainNav .navbar-nav>li.nav-item>a {
         padding: 10px 20px;
+         background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
         color: #fff
     }
 

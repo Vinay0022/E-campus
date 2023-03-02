@@ -1,27 +1,18 @@
 {% include "header.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('{{post.img_url}}')">
+
+  <header class="masthead" style="background-image: url('{{post.img_url}}');">
     <div class="overlay" style="background-image:  url('{{ url_for('static', filename='img/edit-bg.jpg') }}');"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 style="font-family:Arial, Helvetica, sans-serif;">{{post.title}}</h1>
-            <h2 class="subheading" style="font-family: Arial, Helvetica, sans-serif; font-size: 2rem;">{{post.ay}}</h2>
-
-           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group1}} </li>
-
-           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group2}} </li>
-
-           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group3}} </li>
-            <br>
-
-            <h4 style="font-family: Arial, Helvetica, sans-serif; font-size: 2.5rem;">{{post.guide}}</h4>
-            <br>
-            <span class="meta">Posted by
+            <h1 style="font-family:Arial, Helvetica, sans-serif; font-size: 4rem; text-align: center;">{{post.title}}</h1>
+            <span  style="text-align: center;", class="meta">Posted by
               <a href="#">{{post.author.name}}</a>
               on {{post.date}}</span>
+
           </div>
         </div>
       </div>
@@ -29,6 +20,33 @@
   </header>
 
   <!-- Post Content -->
+
+
+  <link href="{{ url_for('static', filename='css/post.css')}}" rel="stylesheet">
+  <script src="{{url_for('static', filename='js/post.js')}}"></script>
+<div class="blog-slider">
+  <div class="blog-slider__wrp swiper-wrapper">
+    <div class="blog-slider__item swiper-slide">
+      <div class="blog-slider__img">
+        
+        <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="">
+      </div>
+      <div class="blog-slider__content">
+        <span style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;" class="blog-slider__code">{{post.ay}}</span>
+        <div  class="blog-slider__title" style="font-family: Arial, Helvetica, sans-serif;">{{post.group1}}</div>
+        <div class="blog-slider__title" style="font-family: Arial, Helvetica, sans-serif;">{{post.group2}}</div>
+        <div class="blog-slider__title" style="font-family: Arial, Helvetica, sans-serif;">{{post.group3}}</div>
+        <div  style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;" class="blog-slider__text">{{post.guide}} </div>
+        <a href="#" class="blog-slider__button">Download PPT</a>
+      </div>
+    </div>
+   
+    
+
+    
+  </div>
+</div>
+  
   <article>
     <div class="container">
       <div class="row">
@@ -40,6 +58,17 @@
             <a class="btn btn-primary float-right" href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
             </div>
             {% endif %}
+
+ <!-- <h2 class="subheading" style="font-family: Arial, Helvetica, sans-serif; font-size: 2rem;">{{post.ay}}</h2>
+
+           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group1}} </li>
+
+           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group2}} </li>
+
+           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group3}} </li>
+            <br>
+
+            <h4 style="font-family: Arial, Helvetica, sans-serif; font-size: 2.5rem;">{{post.guide}}</h4> -->
 
 
 <!--           Comments Area -->
