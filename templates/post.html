@@ -2,15 +2,23 @@
 {% import "bootstrap/wtf.html" as wtf %}
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('{{post.img_url}}')">
-    <div class="overlay"></div>
+    <div class="overlay" style="background-image:  url('{{ url_for('static', filename='img/edit-bg.jpg') }}');"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>{{post.title}}</h1>
-            <h2 class="subheading">{{post.subtitle}}</h2>
-            <h3>{{post.group}}</h3>
-            <h4>{{post.guide}}</h4>
+            <h1 style="font-family:Arial, Helvetica, sans-serif;">{{post.title}}</h1>
+            <h2 class="subheading" style="font-family: Arial, Helvetica, sans-serif; font-size: 2rem;">{{post.ay}}</h2>
+
+           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group1}} </li>
+
+           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group2}} </li>
+
+           <li style=" font-family: Arial, Helvetica, sans-serif; list-style: Roman; font-size: 2rem; font-weight: bold;" > {{post.group3}} </li>
+            <br>
+
+            <h4 style="font-family: Arial, Helvetica, sans-serif; font-size: 2.5rem;">{{post.guide}}</h4>
+            <br>
             <span class="meta">Posted by
               <a href="#">{{post.author.name}}</a>
               on {{post.date}}</span>
@@ -25,7 +33,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            {{ post.body|safe }}
+            <!--{{ post.body|safe }} -->
           <hr>
             {% if current_user.id == post.author_id %}
             <div class="clearfix">

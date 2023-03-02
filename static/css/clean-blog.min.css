@@ -201,7 +201,7 @@ img::-moz-selection {
 }
 
 #mainNav .navbar-nav>li.nav-item>a {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase
@@ -282,13 +282,15 @@ header.masthead {
 }
 
 header.masthead .overlay {
+    background-size: cover;
+    background-position: center;
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: #212529;
-    opacity: .5
+    /* background-color: #212529; */
+    /* opacity: .5 */
 }
 
 header.masthead .page-heading,
