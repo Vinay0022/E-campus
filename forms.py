@@ -9,13 +9,10 @@ from flask_ckeditor import CKEditorField
 class CreateEventForm(FlaskForm):
     title = StringField("Project Title", validators=[DataRequired()])
     ay = StringField("Academic Year", validators=[DataRequired()])
-   # group = StringField("Group Members", validators=[DataRequired()],widget=TextArea())
     group1 = StringField("Group Members", validators=[DataRequired()])
     group2 = StringField("Group Members", validators=[DataRequired()])
     group3 = StringField("Group Members", validators=[DataRequired()])
     guide = StringField("Project Guide", validators=[DataRequired()])
-    #img_url = StringField("Project Image URL", validators=[DataRequired(), URL()])
-    #body = StringField("Project Content")
     submit = SubmitField("Create")
 
 class RegisterForm(FlaskForm):

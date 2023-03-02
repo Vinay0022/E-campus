@@ -70,8 +70,6 @@ class BlogPost(db.Model):
     group3 = db.Column(db.String(250), unique=True, nullable=False)
     guide = db.Column(db.String(250), nullable=False)
     date = db.Column(db.String(250), nullable=False)
-    #body = db.Column(db.Text, nullable=False)
-    #img_url = db.Column(db.String(250), nullable=False)
     author = relationship("User", back_populates="posts")
     comments = relationship("Comment", back_populates="parent_post")
 
@@ -211,8 +209,6 @@ def add_new_post():
             group2=form.group2.data,
             group3=form.group3.data,
             guide=form.guide.data,
-            #body=form.body.data,
-            #img_url=form.img_url.data,
             author=current_user,
             date=date.today().strftime("%B %d, %Y")
         )
@@ -232,9 +228,7 @@ def edit_post(post_id):
         group2=post.group2,
         group3=post.group3,
         guide=post.guide,
-        #img_url=post.img_url,
         author=current_user,
-        #body=post.body
     )
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
@@ -243,8 +237,6 @@ def edit_post(post_id):
         post.group2 = edit_form.group2.data
         post.group3 = edit_form.group3.data
         post.guide = edit_form.guide.data
-        #post.img_url = edit_form.img_url.data
-        #post.body = edit_form.body.data
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
