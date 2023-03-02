@@ -24,7 +24,7 @@ Bootstrap(app)
 
 ##CONNECT TO DB
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
-#postgres://e_campus_euel_user:o3RtKUUzvJN2ZXgF9wjwqqyh9zTWhTGO@dpg-cg0ahcd269vdqr8t0n30-a.oregon-postgres.render.com/e_campus_euel
+#postgres://e_campus_7vcz_user:CPAplugO2l6KnIN3DmDJXUXgd3Y8ftVY@dpg-cg0do6pmbg5ek4h5lt9g-a.singapore-postgres.render.com/e_campus_7vcz
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
