@@ -16,6 +16,9 @@ import re
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from base64 import b64encode
+#my code
+from io import BytesIO
+
 
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
@@ -96,6 +99,8 @@ class Comment(db.Model):
 db.create_all()
 #with app.app_context():
 #            db.create_all()
+
+
 
 
 @app.route('/')
@@ -208,20 +213,22 @@ def contact():
     return render_template("contact.html", form=form)
 
 
+
 @app.route("/new-post", methods=["GET", "POST"])
 def add_new_post():
     form = CreateEventForm()
     if form.validate_on_submit():
-        ppt2=form.ppt.data.read()
-        ppt2= base64.b64encode(ppt2)
-        ppt2=ppt2.decode("UTF-8")
-        print(ppt2)
+        # ppt2=form.ppt.data.read()
+        # ppt2= base64.b64encode(ppt2)
+        # ppt2=ppt2.decode("UTF-8")
+        # print(ppt2)
     #   if form.validate_on_submit():
     #     f = form.post.data
     #     filename = secure_filename(f.filename)
     #     f.save(os.path.join(
     #       "D:\Projects\E-campus\static\img\img.jpg" 
     #     ))
+        # ppt = form.ppt.data.read()
         new_post = BlogPost(
             title=form.title.data,
             ay=form.ay.data,
@@ -229,7 +236,7 @@ def add_new_post():
             group2=form.group2.data,
             group3=form.group3.data,
             guide=form.guide.data,
-             ppt= form.ppt.data.read(),
+            ppt= form.ppt.data.read(),
             author=current_user,
             date=date.today().strftime("%B %d, %Y")
         )

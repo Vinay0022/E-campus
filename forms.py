@@ -16,7 +16,7 @@ class CreateEventForm(FlaskForm):
     guide = StringField("Project Guide", validators=[DataRequired()])
     ppt= FileField('image', validators=[
         FileRequired(),
-        FileAllowed(['jpg', 'png','pptx'], 'Images only!')
+        FileAllowed(['jpg', 'png','pptx','pdf'], 'Images only!')
     ])
     submit = SubmitField("Create")
 
