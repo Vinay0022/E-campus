@@ -68,6 +68,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100))
     posts = relationship("BlogPost", back_populates="author")
+    posts1 = relationship("Upload", back_populates="author1")
     comments = relationship("Comment", back_populates="comment_author")
 
 class BlogPost(db.Model):
@@ -80,10 +81,17 @@ class BlogPost(db.Model):
     group2 = db.Column(db.String(250), unique=True, nullable=False)
     group3 = db.Column(db.String(250), unique=True, nullable=False)
     guide = db.Column(db.String(250), nullable=False)
-    ppt= db.Column(db.LargeBinary)
     date = db.Column(db.String(250), nullable=False)
     author = relationship("User", back_populates="posts")
     comments = relationship("Comment", back_populates="parent_post")
+
+class Upload(db.Model):
+    __tablename__ = "upload"
+    id = db.Column(db.Integer, primary_key=True)
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    filename = db.Column(db.String(50))
+    data = db.Column(db.LargeBinary)
+    author1= relationship("User", back_populates="posts1")
 
 class Comment(db.Model):
     __tablename__ = "comments"
@@ -94,10 +102,7 @@ class Comment(db.Model):
     comment_author = relationship("User", back_populates="comments")
     parent_post = relationship("BlogPost", back_populates="comments")
 
-class Upload(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(50))
-    data = db.Column(db.LargeBinary)
+
 
 
 db.create_all()
@@ -247,7 +252,6 @@ def edit_post(post_id):
         group2=post.group2,
         group3=post.group3,
         guide=post.guide,
-        ppt=post.ppt,
         author=current_user,
     )
     if edit_form.validate_on_submit():
@@ -257,7 +261,6 @@ def edit_post(post_id):
         post.group2 = edit_form.group2.data
         post.group3 = edit_form.group3.data
         post.guide = edit_form.guide.data
-        post.ppt= edit_form.ppt.data.read()
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
@@ -283,15 +286,15 @@ if __name__ == "__main__":
 def form():
     if request.method == 'POST':
         file = request.files['file']
-
-        upload = Upload(filename=file.filename, data=file.read())
+        # relation between user and upload is author1=current_user
+        upload = Upload(author1=current_user,filename=file.filename, data=file.read())
         db.session.add(upload)
         db.session.commit()
 
         return redirect(url_for('get_all_posts'))
     return render_template('form.html')
 
-@app.route('/download/<upload_id>')
+@app.route('/download/<int:upload_id>')
 def download(upload_id):
-    upload = Upload.query.filter_by(id=upload_id).first()
+    upload = Upload.query.filter_by(author_id=upload_id).first()
     return send_file(BytesIO(upload.data), attachment_filename=upload.filename, as_attachment=True)

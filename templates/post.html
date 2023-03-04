@@ -28,7 +28,6 @@
   <div class="blog-slider__wrp swiper-wrapper">
     <div class="blog-slider__item swiper-slide">
       <div class="blog-slider__img">
-        <img src="data:image/jpg;base64,">
       </div>
       <div class="blog-slider__content">
         <span style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;" class="blog-slider__code">{{post.ay}}</span>
@@ -36,7 +35,7 @@
         <div class="blog-slider__title" style="font-family: Arial, Helvetica, sans-serif;">{{post.group2}}</div>
         <div class="blog-slider__title" style="font-family: Arial, Helvetica, sans-serif;">{{post.group3}}</div>
         <div  style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;" class="blog-slider__text">{{post.guide}} </div>
-        <a href="#" class="blog-slider__button">Download PPT</a>
+        <a href="{{url_for('download',upload_id=post.id)}}" class="blog-slider__button ">Download PPT</a>
       </div>
     </div>
    
