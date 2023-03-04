@@ -34,9 +34,10 @@ ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
-#postgres://e_campus_7vcz_user:CPAplugO2l6KnIN3DmDJXUXgd3Y8ftVY@dpg-cg0do6pmbg5ek4h5lt9g-a.singapore-postgres.render.com/e_campus_7vcz
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
+
+# postgres://e_campus:XNFfjVDw4I3Dhok1Xg9ZR7LPbESCDJVO@dpg-cg1p90vdvk4ronugn450-a.singapore-postgres.render.com/e_campus_sr9w
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -105,7 +106,7 @@ class Comment(db.Model):
 
 
 
-db.create_all()
+# db.create_all()
 #with app.app_context():
 #            db.create_all()
 
