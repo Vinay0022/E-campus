@@ -14,10 +14,6 @@ class CreateEventForm(FlaskForm):
     group2 = StringField("Group Members", validators=[DataRequired()])
     group3 = StringField("Group Members", validators=[DataRequired()])
     guide = StringField("Project Guide", validators=[DataRequired()])
-    ppt= FileField('image', validators=[
-        FileRequired(),
-        FileAllowed(['jpg', 'png','pptx','pdf'], 'Images only!')
-    ])
     submit = SubmitField("Create")
 
 class RegisterForm(FlaskForm):

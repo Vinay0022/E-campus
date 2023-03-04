@@ -16,7 +16,6 @@ import re
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from base64 import b64encode
-#my code
 from io import BytesIO
 
 
@@ -94,6 +93,11 @@ class Comment(db.Model):
     comment = db.Column(db.Text, nullable=False)
     comment_author = relationship("User", back_populates="comments")
     parent_post = relationship("BlogPost", back_populates="comments")
+
+class Upload(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(50))
+    data = db.Column(db.LargeBinary)
 
 
 db.create_all()
@@ -213,28 +217,10 @@ def contact():
     return render_template("contact.html", form=form)
 
 
-@app.route('/download/<upload_id>')
-def download(upload_id):
-	upload = BlogPost.query.filter_by(id=upload_id).first()
-	return send_file(BytesIO(upload.ppt), download_name=upload.ppt, as_attachment=True )
-
-
-
 @app.route("/new-post", methods=["GET", "POST"])
 def add_new_post():
     form = CreateEventForm()
     if form.validate_on_submit():
-        # ppt2=form.ppt.data.read()
-        # ppt2= base64.b64encode(ppt2)
-        # ppt2=ppt2.decode("UTF-8")
-        # print(ppt2)
-    #   if form.validate_on_submit():
-    #     f = form.post.data
-    #     filename = secure_filename(f.filename)
-    #     f.save(os.path.join(
-    #       "D:\Projects\E-campus\static\img\img.jpg" 
-    #     ))
-        # ppt = form.ppt.data.read()
         new_post = BlogPost(
             title=form.title.data,
             ay=form.ay.data,
@@ -242,13 +228,12 @@ def add_new_post():
             group2=form.group2.data,
             group3=form.group3.data,
             guide=form.guide.data,
-            ppt= form.ppt.data.read(),
             author=current_user,
             date=date.today().strftime("%B %d, %Y")
         )
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for("get_all_posts"))
+        return redirect(url_for("form"))
     return render_template("make-post.html", form=form)
 
 
@@ -292,3 +277,21 @@ def delete_post(post_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+@app.route('/form', methods=['GET', 'POST'])
+def form():
+    if request.method == 'POST':
+        file = request.files['file']
+
+        upload = Upload(filename=file.filename, data=file.read())
+        db.session.add(upload)
+        db.session.commit()
+
+        return redirect(url_for('get_all_posts'))
+    return render_template('form.html')
+
+@app.route('/download/<upload_id>')
+def download(upload_id):
+    upload = Upload.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.data), attachment_filename=upload.filename, as_attachment=True)
