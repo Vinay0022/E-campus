@@ -3,46 +3,67 @@
 {% block title %}Grievances{% endblock %}
 {% block content %}
 {% include "header.html" %}
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('{{ url_for('static', filename='img/contact-bg.jpg') }}')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Grievances</h1>
-            <span class="subheading">How can we improve?</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
 
-
-
-<div class="container">
-        <div class="container">
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-success" role="alert">
-              <strong>{{ message }}</strong>
-        </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-</div>
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{{ url_for('static', filename='img/contact-bg.jpg') }}')">
+  <div class="overlay"></div>
+  <div class="container">
     <div class="row">
-
-      <div class="col-lg-8 col-md-10 mx-auto content">
-        {{ ckeditor.load() }}
-        {{ ckeditor.config(name='grievance') }}
-        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="page-heading">
+          <h1>Grievances</h1>
+          <span class="subheading">How can we improve?</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <hr>
 
-{% include "footer.html" %}
-{% endblock %}
+</header>
+
+
+
+<div class="wrap" style="color:rgb(5, 5, 5);text-align:center; ">
+  <div class="feedback" style="display:flex; flex-direction:column;  align-items: center;">
+    <!-- <h1 style="text-align: center;">FEEDBACK FORM !!!</h1> -->
+    <br>
+    <form action="https://formspree.io/f/xknabpry" method="POST">
+      <div class="row" style="margin-left: -70px;">
+        <label style="color:rgb(5, 5, 5); font-family: Arial, Helvetica, sans-serif; margin-left:6px ;" for="text"
+          class="label">Enter you name :</label>
+        <input style="width:35rem;" type="text" id="text" class="row_input" required>
+      </div>
+      <br>
+      <div class="row" style="margin-left: -45px;">
+        <label style="color:rgb(5, 5, 5); margin-left: -45px; font-family: Arial, Helvetica, sans-serif;" for="email"
+          class="label">Your Email address :</label>
+        <input style="width:35rem;" type="email" id="email" class="row_input" required>
+      </div>
+      <br>
+      <div class="row">
+        <label style="color:rgb(5, 5, 5); font-family: Arial, Helvetica, sans-serif;" for="message"
+          class="label">Message :</label>
+        <textarea style="width: 35rem;" name="message" id="message" class="row_input" cols="30" rows="5"
+          required></textarea>
+
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="button">
+          <button style="background-color:#0085a1; color:white; margin-right: -29rem; border: none; 
+                font-size: 14px;
+    font-weight: 800;
+    padding: 15px 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 0;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+             " type="submit;">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  {% include "footer.html" %}
+  {% endblock %}

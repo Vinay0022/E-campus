@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, SelectField, Intege
 from wtforms.validators import DataRequired, URL
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
+from flask_wtf.file import FileField, FileRequired,FileAllowed
 
 
 ##WTForm
@@ -13,6 +14,10 @@ class CreateEventForm(FlaskForm):
     group2 = StringField("Group Members", validators=[DataRequired()])
     group3 = StringField("Group Members", validators=[DataRequired()])
     guide = StringField("Project Guide", validators=[DataRequired()])
+    ppt= FileField('image', validators=[
+        FileRequired(),
+        FileAllowed(['jpg', 'png','pptx'], 'Images only!')
+    ])
     submit = SubmitField("Create")
 
 class RegisterForm(FlaskForm):

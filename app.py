@@ -1,9 +1,11 @@
+import base64
 import os
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, session, url_for, flash,request,send_file
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
@@ -13,6 +15,13 @@ import smtplib
 import re
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from base64 import b64encode
+
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+logging.debug('This message should appear on the console')
+logging.info('So should this')
+logging.warning('And this, too')
 
 my_email = "pythonisez@yahoo.com"
 password = "jdqsxomgcvrttjvi"
@@ -23,9 +32,9 @@ ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
 #postgres://e_campus_7vcz_user:CPAplugO2l6KnIN3DmDJXUXgd3Y8ftVY@dpg-cg0do6pmbg5ek4h5lt9g-a.singapore-postgres.render.com/e_campus_7vcz
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -69,6 +78,7 @@ class BlogPost(db.Model):
     group2 = db.Column(db.String(250), unique=True, nullable=False)
     group3 = db.Column(db.String(250), unique=True, nullable=False)
     guide = db.Column(db.String(250), nullable=False)
+    ppt= db.Column(db.LargeBinary)
     date = db.Column(db.String(250), nullable=False)
     author = relationship("User", back_populates="posts")
     comments = relationship("Comment", back_populates="parent_post")
@@ -83,7 +93,7 @@ class Comment(db.Model):
     parent_post = relationship("BlogPost", back_populates="comments")
 
 
-#db.create_all()
+db.create_all()
 #with app.app_context():
 #            db.create_all()
 
@@ -202,6 +212,16 @@ def contact():
 def add_new_post():
     form = CreateEventForm()
     if form.validate_on_submit():
+        ppt2=form.ppt.data.read()
+        ppt2= base64.b64encode(ppt2)
+        ppt2=ppt2.decode("UTF-8")
+        print(ppt2)
+    #   if form.validate_on_submit():
+    #     f = form.post.data
+    #     filename = secure_filename(f.filename)
+    #     f.save(os.path.join(
+    #       "D:\Projects\E-campus\static\img\img.jpg" 
+    #     ))
         new_post = BlogPost(
             title=form.title.data,
             ay=form.ay.data,
@@ -209,6 +229,7 @@ def add_new_post():
             group2=form.group2.data,
             group3=form.group3.data,
             guide=form.guide.data,
+             ppt= form.ppt.data.read(),
             author=current_user,
             date=date.today().strftime("%B %d, %Y")
         )
@@ -228,6 +249,7 @@ def edit_post(post_id):
         group2=post.group2,
         group3=post.group3,
         guide=post.guide,
+        ppt=post.ppt,
         author=current_user,
     )
     if edit_form.validate_on_submit():
@@ -237,6 +259,7 @@ def edit_post(post_id):
         post.group2 = edit_form.group2.data
         post.group3 = edit_form.group3.data
         post.guide = edit_form.guide.data
+        post.ppt= edit_form.ppt.data.read()
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
