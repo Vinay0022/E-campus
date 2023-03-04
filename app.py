@@ -213,6 +213,12 @@ def contact():
     return render_template("contact.html", form=form)
 
 
+@app.route('/download/<upload_id>')
+def download(upload_id):
+	upload = BlogPost.query.filter_by(id=upload_id).first()
+	return send_file(BytesIO(upload.ppt), download_name=upload.ppt, as_attachment=True )
+
+
 
 @app.route("/new-post", methods=["GET", "POST"])
 def add_new_post():
