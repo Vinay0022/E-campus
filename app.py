@@ -35,8 +35,8 @@ Bootstrap(app)
 
 ##CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
-# postgres://e_campus:Pi3LlnRNakEFaEDBQaJwUbrLQQmSAByW@dpg-cg2476l269vfsnuh7hdg-a.singapore-postgres.render.com/e_campus_0lb6
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -82,6 +82,7 @@ class BlogPost(db.Model):
     group2 = db.Column(db.String(250), unique=True, nullable=False)
     group3 = db.Column(db.String(250), unique=True, nullable=False)
     guide = db.Column(db.String(250), nullable=False)
+    img_url = db.Column(db.String(250), nullable=False)
     date = db.Column(db.String(250), nullable=False)
     author = relationship("User", back_populates="posts")
     comments = relationship("Comment", back_populates="parent_post")
@@ -92,7 +93,6 @@ class Upload(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     filename = db.Column(db.String(50))
     data = db.Column(db.LargeBinary)
-    img = db.Column(db.LargeBinary)
     author1= relationship("User", back_populates="posts1")
 
 class Comment(db.Model):
@@ -229,15 +229,16 @@ def add_new_post():
     form = CreateEventForm()
     if form.validate_on_submit():
         new_post = BlogPost(
-            title=form.title.data,
-            ay=form.ay.data,
+        title=form.title.data,
+        ay=form.ay.data,
             group1=form.group1.data,
             group2=form.group2.data,
             group3=form.group3.data,
             guide=form.guide.data,
+            img_url=form.img_url.data,
             author=current_user,
             date=date.today().strftime("%B %d, %Y")
-        )
+            )
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("form"))
@@ -254,6 +255,7 @@ def edit_post(post_id):
         group2=post.group2,
         group3=post.group3,
         guide=post.guide,
+        img_url=post.img_url,
         author=current_user,
     )
     if edit_form.validate_on_submit():
@@ -263,6 +265,7 @@ def edit_post(post_id):
         post.group2 = edit_form.group2.data
         post.group3 = edit_form.group3.data
         post.guide = edit_form.guide.data
+        post.img_url = edit_form.img_url.data
         db.session.commit()
     
         return redirect(url_for("show_post", post_id=post.id))
@@ -291,12 +294,11 @@ if __name__ == "__main__":
 def form():
     if request.method == 'POST':
         file = request.files['file']
-        file2 = request.files['file2']
         # relation between user and upload is author1=current_user
-        upload = Upload(author1=current_user,filename=file.filename, data=file.read(),img=file2.read())
+        upload = Upload(author1=current_user,filename=file.filename, data=file.read())
         db.session.add(upload)
         db.session.commit()
-
+      
         return redirect(url_for('get_all_posts'))
     return render_template('form.html')
 
@@ -304,3 +306,6 @@ def form():
 def download(upload_id):
     upload = Upload.query.filter_by(author_id=upload_id).first()
     return send_file(BytesIO(upload.data), attachment_filename=upload.filename, as_attachment=True)
+
+
+  

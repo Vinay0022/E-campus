@@ -14,6 +14,7 @@ class CreateEventForm(FlaskForm):
     group2 = StringField("Group Members", validators=[DataRequired()])
     group3 = StringField("Group Members", validators=[DataRequired()])
     guide = StringField("Project Guide", validators=[DataRequired()])
+    img_url = StringField("Project Image URL" )
     submit = SubmitField("Create")
 
 class RegisterForm(FlaskForm):

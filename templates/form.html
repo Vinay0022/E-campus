@@ -1,38 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Documents</title>
-    <style>
-        body {
-          margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Documents</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40vh;
+     
+    }
+
+    .edit_img {
+
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url(/static/img/edit-bg.jpg);
+      height: 30rem;
+
+    }
+
+    .txt {
+      padding-top: 10rem;
+      text-align: center;
+      font-size: 24px;
+      line-height: 1.1;
+      font-weight: 300;
+      color: #fff;
+      font-family: 'Times New Roman', Times, serif;
+
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 80px;
+      color: #fff;
+    }
+
+    #subheading{
+      font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: .5px;
+    margin: 10px 0 0;
+    font-family: 'Times New Roman', Times, serif;
+    }
+
+    
+
   
-        .center {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-        }
-      </style>
+
+    .myfrm {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 55rem;
+      height: 12rem;
+      border: 2px dashed black;
+    }
+
+    .sub_btn {
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 15px 25px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 0;
+      font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #0085a1;
+      border-color: #0085a1;
+      cursor: pointer;
+      width: 12rem;
+      margin-left: -1rem;
+
+    }
+
+     input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+} 
+  </style>
 </head>
+
 <body>
-    <div class="center">
-        <form method="POST" action="/form" enctype="multipart/form-data">
-            <label>Upload PPT
-            <input type="file" name="file"  >
-            </label>
-            <br>
-            <br> 
-            <label>Upload IMG
-            <input type="file" name="file2">
-            </label>
-            <br>
-            <br>
-            <button>Submit</button>
-        </form>
+  <div class="edit_img">
+    <div class="txt">
+      <h1 >Upload Documents</h1>
+      <span id="subheading">Post PPT & IMG!!</span>
     </div>
+  </div>
+  <div class="center">
+    <form method="POST" action="/form" class="myfrm" enctype="multipart/form-data">
+      <!-- <label style="font-size: x-large;">Upload PPT  : 
+        <input type="file" name="file">
+      </label>
+      <br>
+      <label  style="font-size: x-large;">Upload IMG  :
+        <input type="file" name="file2" >
+      </label>
+
+      <br> -->
+
+      <label for="file-upload" class="custom-file-upload">
+        UPLOAD PPT  <i class="fa fa-cloud-upload"></i> 
+      </label>
+      <input id="file-upload" type="file" name="file"/>
+
+      <br>
+
+      <!-- <label for="file-upload" class="custom-file-upload">
+        UPLOAD IMG <i class="fa fa-cloud-upload"></i> 
+      </label>
+      <input id="file-upload" type="file" name="file2"/>
+      <br> -->
+  
+      <button class="sub_btn">SUBMIT</button>
+    </form>
+  </div>
 </body>
+
 </html>
