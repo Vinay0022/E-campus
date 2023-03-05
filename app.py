@@ -35,8 +35,8 @@ Bootstrap(app)
 
 ##CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
-# postgres://e_campus:XNFfjVDw4I3Dhok1Xg9ZR7LPbESCDJVO@dpg-cg1p90vdvk4ronugn450-a.singapore-postgres.render.com/e_campus_sr9w
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# postgres://e_campus:Pi3LlnRNakEFaEDBQaJwUbrLQQmSAByW@dpg-cg2476l269vfsnuh7hdg-a.singapore-postgres.render.com/e_campus_0lb6
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -271,7 +271,9 @@ def edit_post(post_id):
 @app.route("/delete/<int:post_id>")
 def delete_post(post_id):
     post_to_delete = BlogPost.query.get(post_id)
+    Upload_to_delete= Upload.query.get(post_id)
     db.session.delete(post_to_delete)
+    db.session.delete(Upload_to_delete)
     db.session.commit()
     return redirect(url_for('get_all_posts'))
 
