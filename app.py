@@ -92,6 +92,7 @@ class Upload(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     filename = db.Column(db.String(50))
     data = db.Column(db.LargeBinary)
+    img = db.Column(db.LargeBinary)
     author1= relationship("User", back_populates="posts1")
 
 class Comment(db.Model):
@@ -263,6 +264,7 @@ def edit_post(post_id):
         post.group3 = edit_form.group3.data
         post.guide = edit_form.guide.data
         db.session.commit()
+    
         return redirect(url_for("show_post", post_id=post.id))
 
     return render_template("make-post.html", form=edit_form)
@@ -289,8 +291,9 @@ if __name__ == "__main__":
 def form():
     if request.method == 'POST':
         file = request.files['file']
+        file2 = request.files['file2']
         # relation between user and upload is author1=current_user
-        upload = Upload(author1=current_user,filename=file.filename, data=file.read())
+        upload = Upload(author1=current_user,filename=file.filename, data=file.read(),img=file2.read())
         db.session.add(upload)
         db.session.commit()
 
