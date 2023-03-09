@@ -38,7 +38,7 @@ Bootstrap(app)
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
-# postgres://e_campus:8QPFSWuU5kHXphUQ0IwnSkTDnNrRCJK4@dpg-cg4v9bndvk4n2c1fq87g-a.singapore-postgres.render.com/e_campus_q4qm
+# postgres://e_campus:0wxgQFVEmUEY6eu6bH4tudl5FqtfMqsH@dpg-cg4vhpg2qv287crjkt7g-a.singapore-postgres.render.com/e_campus_ibhe
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -108,7 +108,7 @@ class Comment(db.Model):
 
 
 
-db.create_all()
+# db.create_all()
 #with app.app_context():
 #            db.create_all()
 
