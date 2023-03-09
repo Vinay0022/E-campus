@@ -227,7 +227,6 @@ def contact():
 @app.route("/new-post", methods=["GET", "POST"])
 def add_new_post():
     form = CreateEventForm()
-    # if BlogPost.id==Upload.author_id:
     if form.validate_on_submit():
             new_post = BlogPost(
             title=form.title.data,
@@ -243,8 +242,6 @@ def add_new_post():
             db.session.add(new_post)
             db.session.commit()
             return redirect(url_for("form"))
-    # else:
-    #     flash("You have Already Uploaded One Project")
     return render_template("make-post.html", form=form)
 
 
