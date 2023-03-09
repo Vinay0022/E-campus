@@ -34,10 +34,11 @@ ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///campus.db'
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# postgres://e_campus:8QPFSWuU5kHXphUQ0IwnSkTDnNrRCJK4@dpg-cg4v9bndvk4n2c1fq87g-a.singapore-postgres.render.com/e_campus_q4qm
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -223,25 +224,27 @@ def contact():
         return redirect("/login")
     return render_template("contact.html", form=form)
 
-
 @app.route("/new-post", methods=["GET", "POST"])
 def add_new_post():
     form = CreateEventForm()
+    # if BlogPost.id==Upload.author_id:
     if form.validate_on_submit():
-        new_post = BlogPost(
-        title=form.title.data,
-        ay=form.ay.data,
-            group1=form.group1.data,
-            group2=form.group2.data,
-            group3=form.group3.data,
-            guide=form.guide.data,
-            img_url=form.img_url.data,
-            author=current_user,
-            date=date.today().strftime("%B %d, %Y")
-            )
-        db.session.add(new_post)
-        db.session.commit()
-        return redirect(url_for("form"))
+            new_post = BlogPost(
+            title=form.title.data,
+            ay=form.ay.data,
+                group1=form.group1.data,
+                group2=form.group2.data,
+                group3=form.group3.data,
+                guide=form.guide.data,
+                img_url=form.img_url.data,
+                author=current_user,
+                date=date.today().strftime("%B %d, %Y")
+                )
+            db.session.add(new_post)
+            db.session.commit()
+            return redirect(url_for("form"))
+    # else:
+    #     flash("You have Already Uploaded One Project")
     return render_template("make-post.html", form=form)
 
 
